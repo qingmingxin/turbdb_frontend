@@ -1,5 +1,28 @@
 import httpInstance from "@/utils/http";
 
+var moduleName = '/users';
+
+export function loginAPI({ username, password }) {
+    return httpInstance({
+        url: moduleName+'/login/',
+        method: 'post',
+        data: {
+            username,
+            password
+        }
+    })
+}
+
+export function updateToken({refresh}){
+    return httpInstance({
+        url:moduleName + '/token/refresh/',
+        method:'post',
+        data:{
+            refresh
+        }
+    })
+}
+
 
 export function LoginByPwdAPI({ account, password }) {
     return httpInstance({
@@ -23,12 +46,9 @@ export function LoginByCodeAPI({ account, code }) {
     })
 }
 
-export function LogoutAPI(account) {
+export function LogoutAPI() {
     return httpInstance({
-        url: '/logout/',
+        url: moduleName+'/logout/',
         method: 'post',
-        data: {
-            "account": account
-        }
     })
 }

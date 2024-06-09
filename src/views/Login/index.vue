@@ -6,7 +6,7 @@ import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 const form = ref({
-    account: "",
+    username: "",
     password: "",
     code: "",
 })
@@ -15,7 +15,7 @@ const isVerifyLogin = ref(false)
 const router = useRouter()
 const userStore = useUserStore()
 const rules = {
-    "account": [
+    "username": [
         { required: true, message: '请输入用户名/邮箱', trigger: 'blur' },
         {
             validator: (rule, val, callback) => {
@@ -49,8 +49,8 @@ const rules = {
 const onChangeLoginWay = () => {
     form.value.code = ""
     form.value.password = ""
-    if (!ValidateEmail(form.value.account)) {
-        form.value.account = ""
+    if (!ValidateEmail(form.value.username)) {
+        form.value.username = ""
     }
     isVerifyLogin.value = !isVerifyLogin.value
 }
@@ -58,15 +58,17 @@ const onChangeLoginWay = () => {
 const formRef = ref(null)
 // 点击登录按钮触发事件
 const doLogin = () => {
-    const { account, password, code } = form.value
+    const { username, password, code } = form.value
     formRef.value.validate(async (valid) => {
         if (valid) {
             if (isVerifyLogin.value) {
-                await userStore.getUserInfoByCode({ account, code })
+                await userStore.getUserInfoByCode({ username, code })
             } else {
-                await userStore.getUserInfoByPwd({ account, password })
+                // await userStore.getUserInfoByPwd({ username, password })
+                await userStore.Login({ username, password })
             }
             ElMessage({ type: 'success', message: "登录成功" })
+            console.log(userStore.userInfo);
             router.replace({ path: "/" })
         }
     })
@@ -81,8 +83,8 @@ const doLogin = () => {
             <div class="header">Login</div>
             <el-form ref="formRef" :rules="rules" :model="form">
                 <template v-if="!isVerifyLogin">
-                    <el-form-item prop="account">
-                        <el-input type="text" v-model="form.account" placeholder="用户名/邮箱" class="input-item" />
+                    <el-form-item prop="username">
+                        <el-input type="text" v-model="form.username" placeholder="用户名/邮箱" class="input-item" />
                     </el-form-item>
                     <el-form-item prop="password">
                         <el-input type="password" v-model="form.password" show-password placeholder="密码"
@@ -90,8 +92,8 @@ const doLogin = () => {
                     </el-form-item>
                 </template>
                 <template v-else>
-                    <el-form-item prop="account">
-                        <el-input type="text" v-model="form.account" placeholder="邮箱" class="input-item" />
+                    <el-form-item prop="username">
+                        <el-input type="text" v-model="form.username" placeholder="邮箱" class="input-item" />
                     </el-form-item>
                     <el-form-item prop="code" :inline="true">
                         <el-input type="text" v-model="form.code" placeholder="验证码" style="width:200px"

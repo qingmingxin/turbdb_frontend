@@ -16,11 +16,11 @@ export default defineConfig({
     open: true,   //代表vite项目在启动时自动打开浏览器 
     proxy: {
       "/api": {
-        target: "http://192.168.56.1:22222/",
+        target: "http://192.168.56.120:8000/",
         //你的需要请求的服务器地址
         changeOrigin: true, // 允许跨域
         secure: false,  //忽略安全证书   
-        rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径把路径变成空字符,
+        rewrite: (path) => path.replace(/^\/api/, '/api'), // 重写路径把路径变成空字符,
       },
     },
   },

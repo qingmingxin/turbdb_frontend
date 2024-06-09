@@ -1,16 +1,23 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { LoginByCodeAPI, LoginByPwdAPI, LogoutAPI } from "@/apis/user"
+import { LoginByCodeAPI, LoginByPwdAPI, LogoutAPI, loginAPI,updateToken } from "@/apis/user"
 
 export const useUserStore = defineStore('user', () => {
     const userInfo = ref({})
 
 
+    const Login = async ({ username, password }) => {
+        const res = await loginAPI({ username, password })
+        userInfo.value = Object.assign({}, res);
+        const currentDate = new Date();
+        const expireDate = new Date(currentDate.getTime() + 1000 * 60);
+        userInfo.value.expireDate = expireDate.toISOString();
+    }
+
     const getUserInfoByPwd = async ({ account, password }) => {
-        const res = await LoginByPwdAPI({ account, password })
+        const res = await loginAPI({ account, password })
         userInfo.value = Object.assign({}, res);
         console.log(userInfo)
-
     }
 
     const getUserInfoByCode = async ({ account, code }) => {
@@ -19,17 +26,26 @@ export const useUserStore = defineStore('user', () => {
 
     }
 
+    const UserUpdateToken = async ({refresh}) => {
+        const res = await updateToken({refresh})
+        const currentDate = new Date();
+        const expireDate = new Date(currentDate.getTime() + 1000 * 60);
+        userInfo.value.expireDate = expireDate.toISOString();
+        userInfo.value.token = res.access;
+    }
+
     const clearUserInfo = async () => {
-        const username = userInfo.value.username
-        await LogoutAPI(username)
+        await LogoutAPI()
         userInfo.value = {}
     }
 
     return {
         userInfo,
+        Login,
         getUserInfoByPwd,
         getUserInfoByCode,
-        clearUserInfo
+        clearUserInfo,
+        UserUpdateToken
     }
 },
     {
