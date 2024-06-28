@@ -19,9 +19,13 @@ export const useUserStore = defineStore('user', () => {
 
     }
 
-    const clearUserInfo = async () => {
+    const UserLogout = async () => {
         const username = userInfo.value.username
         await LogoutAPI(username)
+        clearUserInfo()
+    }
+
+    const clearUserInfo = async () => {
         userInfo.value = {}
     }
 
@@ -29,7 +33,8 @@ export const useUserStore = defineStore('user', () => {
         userInfo,
         getUserInfoByPwd,
         getUserInfoByCode,
-        clearUserInfo
+        clearUserInfo,
+        UserLogout
     }
 },
     {

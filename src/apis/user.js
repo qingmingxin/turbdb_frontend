@@ -29,7 +29,7 @@ export function LoginByCodeAPI({ account, code }) {
 
 export function LogoutAPI(account) {
     return httpInstance({
-        url: '/logout/',
+        url: modelProfix + '/logout/',
         method: 'post',
         data: {
             "account": account

@@ -6,7 +6,8 @@ const router = useRouter()
 
 const doLogout = () => {
   console.log("退出")
-  userStore.clearUserInfo()
+  userStore.UserLogout()
+  ElMessage({ type: 'success', message: "退出成功" })
   router.push('/')
 
 }
