@@ -11,6 +11,9 @@ const doLogout = () => {
   router.push('/')
 
 }
+function navigateTo() {
+  router.push(`/user`);
+}
 </script>
 
 <template>
@@ -43,7 +46,7 @@ const doLogout = () => {
       </ul>
       <ul>
         <template v-if="userStore.userInfo.token">
-          <li><a href="javascript:;"><i class="iconfont icon-account"></i>{{ userStore.userInfo.username }}</a></li>
+          <li><a href="javascript:;"><i class="iconfont icon-account"></i><router-link to="/person">{{ userStore.userInfo.username }}</router-link></a></li>
           <li>
             <el-popconfirm @confirm="doLogout" title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
               <template #reference>

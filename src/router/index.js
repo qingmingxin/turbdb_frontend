@@ -1,5 +1,3 @@
-
-
 import { createRouter, createWebHistory } from 'vue-router'
 
 import Login from '@/views/Login/index.vue'
@@ -9,24 +7,38 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
+      path: '/',
       component: Layout,
       children: [
         {
-          path: "",
-          component: Home
+          path: '',
+          component: Home,
         },
         {
-          path: "/login",
-          component: Login
+          path: '/person',
+          component: () => import('@/views/User/index.vue'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/views/User/components/UserInfo.vue'),
+            },
+            {
+              path: 'pwd_change',
+              component: () => import('@/views/User/components/ChangePwd.vue'),
+            },
+          ],
         },
         {
-          path: "/registe",
-          component: () => import("@/views/Registe/index.vue"),
+          path: '/login',
+          component: Login,
         },
         {
-          path: "job",
-          component: () => import("@/views/Job/index.vue"),
+          path: '/registe',
+          component: () => import('@/views/Registe/index.vue'),
+        },
+        {
+          path: 'job',
+          component: () => import('@/views/Job/index.vue'),
           // children:[
           //   {
           //     path: 'editor',
@@ -39,48 +51,51 @@ const router = createRouter({
           // ]
         },
         {
-          path: "article",
-          component: () => import("@/views/Article/index.vue"),
+          path: 'article',
+          component: () => import('@/views/Article/index.vue'),
         },
         {
-          path: "download",
-          component: () => import("@/views/Download/index.vue"),
+          path: 'download',
+          component: () => import('@/views/Download/index.vue'),
         },
         {
-          path: "institute",
-          component: () => import("@/views/Institute/index.vue"),
+          path: 'institute',
+          component: () => import('@/views/Institute/index.vue'),
           children: [
             {
               path: 'nwpu',
-              component: () => import("@/views/Institute/components/InstituteNWPU.vue")
+              component: () =>
+                import('@/views/Institute/components/InstituteNWPU.vue'),
             },
             {
               path: 'caaa',
-              component: () => import("@/views/Institute/components/InstituteCAAA.vue")
+              component: () =>
+                import('@/views/Institute/components/InstituteCAAA.vue'),
             },
             {
               path: 'hit',
-              component: () => import("@/views/Institute/components/InstituteHIT.vue")
+              component: () =>
+                import('@/views/Institute/components/InstituteHIT.vue'),
             },
             {
               path: 'sjtu',
-              component: () => import("@/views/Institute/components/InstituteSJTU.vue")
+              component: () =>
+                import('@/views/Institute/components/InstituteSJTU.vue'),
             },
             {
               path: 'zju',
-              component: () => import("@/views/Institute/components/InstituteZJU.vue")
+              component: () =>
+                import('@/views/Institute/components/InstituteZJU.vue'),
             },
-          ]
+          ],
         },
         {
-          path:"database",
-          component:() => import("@/views/Database/index.vue")
-        }
-
-      ]
+          path: 'database',
+          component: () => import('@/views/Database/index.vue'),
+        },
+      ],
     },
-    
-  ]
+  ],
 })
 
 export default router
