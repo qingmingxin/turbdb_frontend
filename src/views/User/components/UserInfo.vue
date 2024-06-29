@@ -1,5 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
+import { useUserStore } from '@/stores/user'
+const userStore = useUserStore()
+
+onBeforeMount(async () => {
+  await userStore.userGetInfo()
+})
 </script>
 <template>
   <div>

@@ -4,7 +4,8 @@ import {
   LoginByCodeAPI,
   LoginByPwdAPI,
   LogoutAPI,
-  PwdChangePAI,
+  PwdChangeAPI,
+  GetUserInfoAPI,
 } from '@/apis/user'
 
 export const useUserStore = defineStore(
@@ -12,7 +13,7 @@ export const useUserStore = defineStore(
   () => {
     const userInfo = ref({})
 
-    const getUserInfoByPwd = async ({ account, password }) => {
+    const userLoginByPwd = async ({ account, password }) => {
       const res = await LoginByPwdAPI({ account, password })
       userInfo.value = Object.assign({}, res)
       console.log(userInfo)
@@ -29,9 +30,15 @@ export const useUserStore = defineStore(
       clearUserInfo()
     }
 
+    const userGetInfo = async () => {
+      var user_id = userInfo.value.id
+      const ret = await GetUserInfoAPI({ user_id })
+      console.log(ret)
+    }
+
     const changePwd = async ({ pwd_old, pwd_new, pwd_re }) => {
       const user_id = userInfo.value.id
-      await PwdChangePAI({ pwd_old, pwd_new, pwd_re, user_id })
+      await PwdChangeAPI({ pwd_old, pwd_new, pwd_re, user_id })
     }
 
     const clearUserInfo = async () => {
@@ -40,11 +47,12 @@ export const useUserStore = defineStore(
 
     return {
       userInfo,
-      getUserInfoByPwd,
+      userLoginByPwd,
       getUserInfoByCode,
       clearUserInfo,
       UserLogout,
       changePwd,
+      userGetInfo,
     }
   },
   {

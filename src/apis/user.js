@@ -24,12 +24,7 @@ export function LoginByCodeAPI({ account, code }) {
   })
 }
 
-// TODO:待完善
-export function PwdChangePAI({ pwd_old, pwd_new, pwd_re, user_id }) {
-  console.log(user_id)
-  console.log(pwd_old)
-  console.log(pwd_new)
-  console.log(pwd_re)
+export function PwdChangeAPI({ pwd_old, pwd_new, pwd_re, user_id }) {
   return httpInstance({
     url: modelProfix + '/pwd_change/' + user_id,
     method: 'put',
@@ -38,6 +33,13 @@ export function PwdChangePAI({ pwd_old, pwd_new, pwd_re, user_id }) {
       pwd_new,
       pwd_re,
     },
+  })
+}
+
+export function GetUserInfoAPI({ user_id }) {
+  return httpInstance({
+    url: modelProfix + '/info/' + user_id,
+    method: 'get',
   })
 }
 
