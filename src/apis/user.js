@@ -43,6 +43,38 @@ export function GetUserInfoAPI({ user_id }) {
   })
 }
 
+export function VerifyCodeAPI({ email, code, codeID }) {
+  return httpInstance({
+    url: modelProfix + '/verify_code/',
+    method: 'post',
+    data: {
+      email,
+      code,
+      codeID,
+    },
+  })
+}
+
+export function SendEmail({ email }) {
+  return httpInstance({
+    url: modelProfix + '/sendemail/',
+    method: 'post',
+    data: {
+      email,
+    },
+  })
+}
+
+export function UpdateUserInfoAPI({ data, user_id }) {
+  return httpInstance({
+    url: modelProfix + '/update/' + user_id,
+    method: 'put',
+    data: {
+      data,
+    },
+  })
+}
+
 export function LogoutAPI(account) {
   return httpInstance({
     url: modelProfix + '/logout/',
