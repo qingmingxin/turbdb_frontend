@@ -11,6 +11,8 @@ import {
   VerifyCodeAPI,
 } from '@/apis/user'
 
+import { GetFileAPI } from '@/apis/files'
+
 export const useUserStore = defineStore(
   'user',
   () => {
@@ -37,24 +39,33 @@ export const useUserStore = defineStore(
       var user_id = userInfo.value.id
       const ret = await GetUserInfoAPI({ user_id })
       for (var key in ret) {
-        userItemList.value[key] = {
-          label: ret[key]['verbose_name'],
-          is_modify: ret[key]['is_modify'],
+        if (ret[key]['is_list']) {
+          userItemList.value[key] = {
+            label: ret[key]['verbose_name'],
+            is_modify: ret[key]['is_modify'],
+          }
         }
         userInfo.value[key] = ret[key]['value']
       }
     }
 
+    const getUserAvatar = async () => {
+      var avatar = userInfo.value['avatar']
+      console.log(avatar)
+      var ret = await GetFileAPI(avatar)
+      return ret
+    }
+
     const updateUserInfo = async (data) => {
       var user_id = userInfo.value.id
       var ret = await UpdateUserInfoAPI({ data, user_id })
-      var msg = ret.msg
       return ret
     }
 
     const changePwd = async ({ pwd_old, pwd_new, pwd_re }) => {
       const user_id = userInfo.value.id
-      await PwdChangeAPI({ pwd_old, pwd_new, pwd_re, user_id })
+      var ret = await PwdChangeAPI({ pwd_old, pwd_new, pwd_re, user_id })
+      return ret
     }
 
     const getEmailCode = async ({ email }) => {
@@ -88,6 +99,7 @@ export const useUserStore = defineStore(
       updateUserInfo,
       getEmailCode,
       UserVerifyCode,
+      getUserAvatar,
     }
   },
   {

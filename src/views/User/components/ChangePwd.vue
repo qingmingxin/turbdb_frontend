@@ -8,6 +8,12 @@ const formData = ref({
   pwd_re: '',
 })
 
+const clearFormData = () => {
+  Object.keys(formData.value).forEach((key) => {
+    formData.value[key] = ''
+  })
+}
+
 const rules = {
   pwd_old: [
     { required: true, message: '请输入密码', trigger: 'blur' },
@@ -40,7 +46,11 @@ const doChangePwd = () => {
     .validate()
     .then(async (valid) => {
       if (valid) {
-        await userStore.changePwd({ pwd_old, pwd_new, pwd_re })
+        var msg = await userStore.changePwd({ pwd_old, pwd_new, pwd_re })
+        if (msg) {
+          ElMessage({ type: 'success', message: msg['msg'] })
+          clearFormData()
+        }
       }
     })
     .catch((error) => {
@@ -48,6 +58,7 @@ const doChangePwd = () => {
         ElMessage.error(error.response.data.error)
       } else {
         ElMessage.error('请检查表单输入')
+        console.log(error)
       }
     })
 }

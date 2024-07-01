@@ -8,7 +8,6 @@ const userInfoTemp = reactive({})
 const changeItem = reactive({})
 
 const loadUserInfo = async () => {
-  await userStore.userGetInfo()
   for (var key in userStore.userItemList) {
     userInfoTemp[key] = userStore.userInfo[key]
   }
@@ -78,8 +77,8 @@ const verifyCode = async () => {
   }
 }
 
-onBeforeMount(async () => {
-  await loadUserInfo()
+onBeforeMount(() => {
+  loadUserInfo()
 })
 </script>
 <template>
