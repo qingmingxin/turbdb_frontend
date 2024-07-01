@@ -47,7 +47,9 @@ export const useUserStore = defineStore(
 
     const updateUserInfo = async (data) => {
       var user_id = userInfo.value.id
-      await UpdateUserInfoAPI({ data, user_id })
+      var ret = await UpdateUserInfoAPI({ data, user_id })
+      var msg = ret.msg
+      return ret
     }
 
     const changePwd = async ({ pwd_old, pwd_new, pwd_re }) => {

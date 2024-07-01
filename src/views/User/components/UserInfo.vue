@@ -20,13 +20,17 @@ const enableSaveButton = () => {
   isModified.value = true
 }
 
-const submitChangeUserInfo = () => {
+const submitChangeUserInfo = async () => {
   for (var key in userInfoTemp) {
     if (userInfoTemp[key] != userStore.userInfo[key]) {
       changeItem[key] = userInfoTemp[key]
     }
   }
-  userStore.updateUserInfo(changeItem)
+  var msg = await userStore.updateUserInfo(changeItem)
+  console.log(msg)
+  if (msg) {
+    ElMessage({ type: 'success', message: msg['msg'] })
+  }
   isModified.value = false
 }
 

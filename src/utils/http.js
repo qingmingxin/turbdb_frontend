@@ -35,7 +35,8 @@ httpInstance.interceptors.response.use(
       })
       const userStore = useUserStore()
       userStore.clearUserInfo()
-    } else if (e.config.url.indexOf('sendemail')) {
+    } else if (e.config.url.indexOf('sendemail')!=-1) {
+      console.log(e.config.url.indexOf('sendemail'))
       if (e.response.data.error === '"邮箱不能重复绑定多个用户"') {
         ElMessage({
           type: 'error',
@@ -49,7 +50,7 @@ httpInstance.interceptors.response.use(
           duration: 5000,
         })
       }
-    } else if (e.config.url.indexOf('verify')) {
+    } else if (e.config.url.indexOf('verify')!=-1) {
       if (e.response.data.error === '"邮箱不能重复绑定多个用户"') {
         ElMessage({
           type: 'error',
@@ -67,6 +68,11 @@ httpInstance.interceptors.response.use(
       console.log(e)
       var url = e.config.url
       console.log(url)
+      ElMessage({
+        type: 'error',
+        message: e.response.data['error'],
+        duration: 5000,
+      })
     }
     return Promise.reject(e)
   }
