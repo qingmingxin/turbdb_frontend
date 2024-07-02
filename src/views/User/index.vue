@@ -2,52 +2,61 @@
 import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import { Plus } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus';
+
 const userStore = useUserStore()
-const userAvatar = ref('path/to/avatar.jpg') // 替换为实际路径
-const username = ref('用户名')
 const router = useRouter()
 
 function navigateTo(route) {
   router.push(`/person${route}`)
 }
 const imageUrl = ref('')
-const getBase64ImageURL = (base64Data) => {
-  const byteCharacters = atob(base64Data)
-  const byteArrays = []
 
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteArrays.push(byteCharacters.charCodeAt(i))
-  }
-
-  const byteArray = new Uint8Array(byteArrays)
-  const blob = new Blob([byteArray], { type: 'image/jpeg' })
-
-  return URL.createObjectURL(blob)
+function handleAvatarSuccess(res, file) {
+  imageUrl.value = URL.createObjectURL(file.raw)
+  console.log(res)
 }
+function beforeAvatarUpload(file) {
+  const isJPG = (file.type === 'image/jpeg' || file.type === 'image/png')
+  const isLt2M = file.size / 1024 / 1024 < 2
+
+  if (!isJPG) {
+    ElMessage({type:"error", message:"上传头像图片只能是 JPG或PNG 格式!"})
+  }
+  if (!isLt2M) {
+    ElMessage({type:"error", message:"上传头像图片大小不能超过 300KB!"})
+  }
+  return isJPG && isLt2M
+}
+let uploadUrl = ref("/api/users/avatar/upload/"+userStore.userInfo.id+"/")
 onBeforeMount(async () => {
   await userStore.userGetInfo()
   var ret = await userStore.getUserAvatar()
-  const blob = new Blob([ret])
-  const reader = new FileReader()
+  imageUrl.value = ret
 
-  reader.onloadend = () => {
-    imageUrl.value = reader.result
-  }
-
-  reader.readAsDataURL(blob)
-  console.log(imageUrl)
-  // console.log(ret)
-  // console.log(typeof ret)
-  // imageUrl.value =  URL.createObjectURL(ret)
-  // console.log(imageUrl)
+  
 })
+const token = ref({Authorization: `Bearer ${userStore.userInfo.token}`})
 </script>
 
 <template>
   <el-container class="personal-page">
     <el-aside class="sidebar">
       <div class="profile">
-        <img :src="imageUrl" class="avatar" style="background-size: contain" />
+        <el-upload
+          class="avatar-uploader"
+          :action=uploadUrl
+          method="post"
+          :headers="token"
+          :show-file-list="false"
+          :auto-upload="true"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+        </el-upload>
         <h2>{{ userStore.userInfo.username }}</h2>
       </div>
       <el-divider></el-divider>

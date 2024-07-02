@@ -13,6 +13,16 @@ export function LoginByPwdAPI({ account, password }) {
   })
 }
 
+export function RegisterAPI(data) {
+  return httpInstance({
+    url: modelProfix + '/register/',
+    method: 'post',
+    data: {
+      data,
+    },
+  })
+}
+
 export function LoginByCodeAPI({ account, code }) {
   return httpInstance({
     url: '/login/',

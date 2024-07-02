@@ -1,233 +1,268 @@
 <script setup>
-
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
+import { useUserStore } from '@/stores/user'
+const userStore = useUserStore()
 
 const registeFormRef = ref(null)
 const getVerifyCodeBtnDisabled = ref(false)
-const getVerifyCodeBtnText = ref('获取验证码');
+const getVerifyCodeBtnText = ref('获取验证码')
 const countdown = ref(0)
-const resCode = ref("111111")
+const resCode = ref('111111')
 const registeFormData = ref({
-    username: "",
-    email: "",
-    password: "",
-    rePassword: "",
-    workAddress: "",
-    code: ""
+  username: '',
+  email: '',
+  password: '',
+  rePassword: '',
+  workAddress: '',
+  code: '',
 })
 const rules = {
-    "username": [
-        { required: true, message: "请输入用户名", trigger: "blur" },
-        { min: 3, max: 20, message: "用户名长度为：3~20", trigger: "blur" },
-    ],
-    "email": [
-        { required: true, message: "请输入邮箱", trigger: "blur" },
-        { type: 'email', message: "邮箱格式有误", trigger: 'blur' },
-    ],
-    "password": [
-        { required: true, message: '请输入密码', trigger: 'blur' },
-        { min: 6, max: 20, message: '密码长度6~20', trigger: 'blur' },
-    ],
-    "rePassword": [
-        { required: true, message: '请输入密码', trigger: 'blur' },
-        { min: 6, max: 20, message: '密码长度6~20', trigger: 'blur' },
-        {
-            trigger: "blur",
-            validator: (rule, val, callback) => {
-                if (registeFormData.value.password === val) {
-                    return callback()
-                }
-                else {
-                    return callback(new Error("两次密码不一致"))
-                }
-            },
+  username: [
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { min: 3, max: 20, message: '用户名长度为：3~20', trigger: 'blur' },
+  ],
+  email: [
+    { required: true, message: '请输入邮箱', trigger: 'blur' },
+    { type: 'email', message: '邮箱格式有误', trigger: 'blur' },
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 6, max: 20, message: '密码长度6~20', trigger: 'blur' },
+  ],
+  rePassword: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 6, max: 20, message: '密码长度6~20', trigger: 'blur' },
+    {
+      trigger: 'blur',
+      validator: (rule, val, callback) => {
+        if (registeFormData.value.password === val) {
+          return callback()
+        } else {
+          return callback(new Error('两次密码不一致'))
         }
-    ],
-    "code": [
-        { required: true, message: '请输入验证码', trigger: 'blur' },
-        {
-            trigger: "blur",
-            validator: (rule, val, callback) => {
-                if (val === resCode.value) {
-                    return callback()
-                } else {
-                    return callback(new Error("验证码错误"))
-                }
-            }
+      },
+    },
+  ],
+  code: [
+    { required: true, message: '请输入验证码', trigger: 'blur' },
+    {
+      trigger: 'blur',
+      validator: (rule, val, callback) => {
+        if (val === resCode.value) {
+          return callback()
+        } else {
+          return callback(new Error('验证码错误'))
         }
-    ]
+      },
+    },
+  ],
 }
 
-
 onMounted(() => {
-    // 在页面加载时检查是否存在缓存的倒计时时间
-    const cachedCountdown = sessionStorage.getItem('countdown');
-    if (cachedCountdown) {
-        countdown.value = Math.max(0, Number(cachedCountdown));
-        startCountdown();
-    }
-});
+  // 在页面加载时检查是否存在缓存的倒计时时间
+  const cachedCountdown = sessionStorage.getItem('countdown')
+  if (cachedCountdown) {
+    countdown.value = Math.max(0, Number(cachedCountdown))
+    startCountdown()
+  }
+})
 
 const startCountdown = () => {
-    getVerifyCodeBtnDisabled.value = true;
-    const timer = setInterval(() => {
-        countdown.value -= 1
-        getVerifyCodeBtnText.value = (countdown.value + ' 秒后重试')
-        if (countdown.value <= 0) {
-            clearInterval(timer);
-            getVerifyCodeBtnDisabled.value = false;
-            countdown.value = 60; // 重置倒计时
-            getVerifyCodeBtnText.value = '获取验证码'
-        }
-    }, 1000);
-};
+  getVerifyCodeBtnDisabled.value = true
+  const timer = setInterval(() => {
+    countdown.value -= 1
+    getVerifyCodeBtnText.value = countdown.value + ' 秒后重试'
+    if (countdown.value <= 0) {
+      clearInterval(timer)
+      getVerifyCodeBtnDisabled.value = false
+      countdown.value = 60 // 重置倒计时
+      getVerifyCodeBtnText.value = '获取验证码'
+    }
+  }, 1000)
+}
 
 onUnmounted(() => {
-    // 在页面卸载时保存当前倒计时时间到 sessionStorage
-    sessionStorage.setItem('countdown', String(countdown.value));
-});
+  // 在页面卸载时保存当前倒计时时间到 sessionStorage
+  sessionStorage.setItem('countdown', String(countdown.value))
+})
 
 // 注册按钮事件
 const doRegiste = async () => {
-    console.log("click registe button")
-    registeFormRef.value.validate().then(() => {
-        console.log("registe")
-    }).catch(() => {
-        ElMessage.error("请检查表单输入")
+  console.log('click registe button')
+  registeFormRef.value
+    .validate()
+    .then(() => {
+      console.log('registe')
+    })
+    .catch(() => {
+      ElMessage.error('请检查表单输入')
     })
 }
 
 //获取验证码按钮事件
 const getVerifyCode = () => {
-    console.log("click get verify code btn")
+  console.log('click get verify code btn')
 
-    // 校验邮件
-    registeFormRef.value.validateField('email')
-        .then(() => {
-            //发送获取验证码
-
-            // 倒计时，单位秒
-            // startCountdown();
-        })
-        .catch(() => {
-            console.log("failed")
-        })
-
+  // 校验邮件
+  registeFormRef.value
+    .validateField('email')
+    .then(() => {
+      //发送获取验证码
+      // 倒计时，单位秒
+      // startCountdown();
+    })
+    .catch(() => {
+      console.log('failed')
+    })
 }
 </script>
 
-
 <template>
-    <div class="registe-container">
-        <div class="registe-wrapper">
-            <div class="header">用户注册</div>
-            <el-form ref="registeFormRef" :rules="rules" :model="registeFormData" :hide-required-asterisk="true">
-                <el-form-item label="用户名" prop="username" label-width="100px">
-                    <el-input v-model="registeFormData.username" placeholder="请输入用户名" clearable />
-                </el-form-item>
-                <el-form-item label="邮箱" prop="email" label-width="100px">
-                    <el-input v-model="registeFormData.email" placeholder="请输入邮箱（每个邮箱只能注册一个账号）" clearable />
-                </el-form-item>
+  <div class="registe-container">
+    <div class="registe-wrapper">
+      <div class="header">用户注册</div>
+      <el-form
+        ref="registeFormRef"
+        :rules="rules"
+        :model="registeFormData"
+        :hide-required-asterisk="true"
+      >
+        <el-form-item label="用户名" prop="username" label-width="100px">
+          <el-input
+            v-model="registeFormData.username"
+            placeholder="请输入用户名"
+            clearable
+          />
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email" label-width="100px">
+          <el-input
+            v-model="registeFormData.email"
+            placeholder="请输入邮箱（每个邮箱只能注册一个账号）"
+            clearable
+          />
+        </el-form-item>
 
-                <el-form-item label="验证码" label-width="100px">
-                    <el-col :span="9">
-                        <el-form-item prop="code">
-                            <el-input v-model="registeFormData.code" placeholder="请输入验证码" clearable />
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="14">
-                        <el-button class="btn-get-verify" @click="getVerifyCode" type="primary"
-                            :disabled="getVerifyCodeBtnDisabled">{{ getVerifyCodeBtnText }}</el-button>
-                    </el-col>
-                </el-form-item>
-                <el-form-item label="密码" prop="password" label-width="100px">
-                    <el-input v-model="registeFormData.password" type="password" placeholder="请输入密码" show-password />
-                </el-form-item>
-                <el-form-item label="确认密码" prop="rePassword" label-width="100px">
-                    <el-input v-model="registeFormData.rePassword" type="password" placeholder="请再次输入密码确认" show-password />
-                </el-form-item>
-                <el-form-item label="工作单位" prop="workAddress" label-width="100px">
-                    <el-input v-model="registeFormData.workAddress" placeholder="请输入工作单位" clearable></el-input>
-                </el-form-item>
+        <el-form-item label="验证码" label-width="100px">
+          <el-col :span="9">
+            <el-form-item prop="code">
+              <el-input
+                v-model="registeFormData.code"
+                placeholder="请输入验证码"
+                clearable
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="14">
+            <el-button
+              class="btn-get-verify"
+              @click="getVerifyCode"
+              type="primary"
+              :disabled="getVerifyCodeBtnDisabled"
+              >{{ getVerifyCodeBtnText }}</el-button
+            >
+          </el-col>
+        </el-form-item>
+        <el-form-item label="密码" prop="password" label-width="100px">
+          <el-input
+            v-model="registeFormData.password"
+            type="password"
+            placeholder="请输入密码"
+            show-password
+          />
+        </el-form-item>
+        <el-form-item label="确认密码" prop="rePassword" label-width="100px">
+          <el-input
+            v-model="registeFormData.rePassword"
+            type="password"
+            placeholder="请再次输入密码确认"
+            show-password
+          />
+        </el-form-item>
+        <el-form-item label="工作单位" prop="workAddress" label-width="100px">
+          <el-input
+            v-model="registeFormData.workAddress"
+            placeholder="请输入工作单位"
+            clearable
+          ></el-input>
+        </el-form-item>
 
-                <el-form-item>
-                    <el-button class="btn" @click="doRegiste">注册</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
+        <el-form-item>
+          <el-button class="btn" @click="doRegiste">注册</el-button>
+        </el-form-item>
+      </el-form>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .registe-container {
-    background-color: aqua;
+  background-color: aqua;
+  text-align: center;
+  height: calc(100vh - 70px);
+  background-image: linear-gradient(to right, #5bedfb, #5f91e9);
+
+  .registe-wrapper {
+    background-color: #fff;
+    width: 458px;
+    height: 588px;
+    border-radius: 15px;
+    padding: 0 50px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .header {
+    font-size: 38px;
+    font-weight: bold;
     text-align: center;
-    height: calc(100vh - 70px);
+    line-height: 200px;
+  }
+
+  .a-group {
+    display: flex;
+    padding: 5px 10px;
+    justify-content: space-between;
+  }
+
+  .input-item {
+    display: block;
+    // width: 100%;
+    margin-bottom: 20px;
+    border: 0;
+    padding: 5px 10px;
+    border-bottom: 1px solid rgb(128, 125, 125);
+    font-size: 15px;
+    outline: none;
+
+    :deep(.el-input__wrapper) {
+      box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color))
+        inset;
+      cursor: default;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .btn {
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: 20px;
     background-image: linear-gradient(to right, #5bedfb, #5f91e9);
+    color: #fff;
+  }
 
+  .msg {
+    text-align: center;
+    line-height: 80px;
+  }
 
-
-    .registe-wrapper {
-        background-color: #fff;
-        width: 458px;
-        height: 588px;
-        border-radius: 15px;
-        padding: 0 50px;
-        position: relative;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .header {
-        font-size: 38px;
-        font-weight: bold;
-        text-align: center;
-        line-height: 200px;
-    }
-
-    .a-group {
-        display: flex;
-        padding: 5px 10px;
-        justify-content: space-between;
-    }
-
-    .input-item {
-        display: block;
-        // width: 100%;
-        margin-bottom: 20px;
-        border: 0;
-        padding: 5px 10px;
-        border-bottom: 1px solid rgb(128, 125, 125);
-        font-size: 15px;
-        outline: none;
-
-        :deep(.el-input__wrapper) {
-            box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color)) inset;
-            cursor: default;
-            width: 100%;
-            text-align: center;
-        }
-    }
-
-    .btn {
-        text-align: center;
-        padding: 10px;
-        width: 100%;
-        margin-top: 20px;
-        background-image: linear-gradient(to right, #5bedfb, #5f91e9);
-        color: #fff;
-    }
-
-    .msg {
-        text-align: center;
-        line-height: 80px;
-    }
-
-    a {
-        text-decoration-line: none;
-        color: #abc1ee;
-    }
+  a {
+    text-decoration-line: none;
+    color: #abc1ee;
+  }
 }
 </style>

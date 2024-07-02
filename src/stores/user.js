@@ -51,9 +51,9 @@ export const useUserStore = defineStore(
 
     const getUserAvatar = async () => {
       var avatar = userInfo.value['avatar']
-      console.log(avatar)
       var ret = await GetFileAPI(avatar)
-      return ret
+      let blob = new Blob([ret]) // 返回的文件流数据
+      return window.URL.createObjectURL(blob) // 将他转化为路径
     }
 
     const updateUserInfo = async (data) => {

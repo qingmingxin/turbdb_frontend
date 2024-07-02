@@ -2,6 +2,7 @@ import axios from 'axios'
 import 'element-plus/es/components/message/style/css'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
+import { useRouter } from 'vue-router'
 
 const httpInstance = axios.create({
   baseURL: '/api',
@@ -35,7 +36,9 @@ httpInstance.interceptors.response.use(
       })
       const userStore = useUserStore()
       userStore.clearUserInfo()
-    } else if (e.config.url.indexOf('sendemail')!=-1) {
+      const router = useRouter()
+      router.push('/')
+    } else if (e.config.url.indexOf('sendemail') != -1) {
       console.log(e.config.url.indexOf('sendemail'))
       if (e.response.data.error === '"邮箱不能重复绑定多个用户"') {
         ElMessage({
@@ -50,7 +53,7 @@ httpInstance.interceptors.response.use(
           duration: 5000,
         })
       }
-    } else if (e.config.url.indexOf('verify')!=-1) {
+    } else if (e.config.url.indexOf('verify') != -1) {
       if (e.response.data.error === '"邮箱不能重复绑定多个用户"') {
         ElMessage({
           type: 'error',

@@ -7,7 +7,7 @@ const userStore = useUserStore()
 const userInfoTemp = reactive({})
 const changeItem = reactive({})
 
-const loadUserInfo = async () => {
+const loadUserInfo = () => {
   for (var key in userStore.userItemList) {
     userInfoTemp[key] = userStore.userInfo[key]
   }
@@ -35,7 +35,6 @@ const submitChangeUserInfo = async () => {
 
 let dialogVisible = ref(false)
 const openDialog = () => {
-  console.log('吸怪')
   dialogVisible.value = true
 }
 
@@ -77,7 +76,7 @@ const verifyCode = async () => {
   }
 }
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   loadUserInfo()
 })
 </script>
