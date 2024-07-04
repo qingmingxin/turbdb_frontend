@@ -55,6 +55,10 @@ const router = createRouter({
           component: () => import('@/views/Article/index.vue'),
         },
         {
+          path: 'query',
+          component: () => import('@/views/Query/index.vue'),
+        },
+        {
           path: 'download',
           component: () => import('@/views/Download/index.vue'),
         },

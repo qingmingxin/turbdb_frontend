@@ -1,3 +1,7 @@
+/**
+ * @file 用户store
+ */
+
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import {
@@ -12,7 +16,7 @@ import {
   RegisterAPI,
 } from '@/apis/user'
 
-import { GetFileAPI } from '@/apis/files'
+import { GetFileFromWebAPI } from '@/apis/files'
 
 export const useUserStore = defineStore(
   'user',
@@ -76,7 +80,7 @@ export const useUserStore = defineStore(
 
     const getUserAvatar = async () => {
       var avatar = userInfo.value['avatar']
-      var ret = await GetFileAPI(avatar)
+      var ret = await GetFileFromWebAPI(avatar)
       let blob = new Blob([ret]) // 返回的文件流数据
       return window.URL.createObjectURL(blob) // 将他转化为路径
     }

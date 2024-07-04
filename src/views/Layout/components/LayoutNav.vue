@@ -5,14 +5,13 @@ const userStore = useUserStore()
 const router = useRouter()
 
 const doLogout = () => {
-  console.log("退出")
+  console.log('退出')
   userStore.UserLogout()
-  ElMessage({ type: 'success', message: "退出成功" })
+  ElMessage({ type: 'success', message: '退出成功' })
   router.push('/')
-
 }
 function navigateTo() {
-  router.push(`/user`);
+  router.push(`/user`)
 }
 </script>
 
@@ -26,18 +25,18 @@ function navigateTo() {
         <li>
           <RouterLink to="/institute/nwpu">研究机构</RouterLink>
         </li>
-        <li><a href="javascript:;">获取数据</a></li>
+        <li>
+          <RouterLink to="/query">获取数据</RouterLink>
+        </li>
 
         <!-- <template v-if="userStore.userInfo.token"> -->
         <template v-if="true">
-
           <li>
             <RouterLink to="/download">数据下载</RouterLink>
           </li>
           <li>
             <RouterLink to="/job">在线提交</RouterLink>
           </li>
-
         </template>
 
         <li>
@@ -46,9 +45,21 @@ function navigateTo() {
       </ul>
       <ul>
         <template v-if="userStore.userInfo.token">
-          <li><a href="javascript:;"><i class="iconfont icon-account"></i><router-link to="/person">{{ userStore.userInfo.username }}</router-link></a></li>
           <li>
-            <el-popconfirm @confirm="doLogout" title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+            <a href="javascript:;"
+              ><i class="iconfont icon-account"></i
+              ><router-link to="/person">{{
+                userStore.userInfo.username
+              }}</router-link></a
+            >
+          </li>
+          <li>
+            <el-popconfirm
+              @confirm="doLogout"
+              title="确认退出吗?"
+              confirm-button-text="确认"
+              cancel-button-text="取消"
+            >
               <template #reference>
                 <a href="javascript:;">退出登录</a>
               </template>
@@ -69,7 +80,6 @@ function navigateTo() {
     </div>
   </nav>
 </template>
-
 
 <style scoped lang="scss">
 .app-topnav {
@@ -110,16 +120,13 @@ function navigateTo() {
           }
         }
 
-        ~li {
+        ~ li {
           a {
             border-left: 2px solid #666;
           }
         }
       }
-
     }
   }
-
-
 }
 </style>
