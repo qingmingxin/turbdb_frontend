@@ -53,6 +53,8 @@ httpInstance.interceptors.response.use(
           duration: 5000,
         })
       }
+    } else if (e.config.url.indexOf('file') != -1) {
+      console.log(e)
     } else if (e.config.url.indexOf('verify') != -1) {
       if (e.response.data.error === '"邮箱不能重复绑定多个用户"') {
         ElMessage({

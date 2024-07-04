@@ -9,6 +9,7 @@ import {
   UpdateUserInfoAPI,
   SendEmail,
   VerifyCodeAPI,
+  RegisterAPI,
 } from '@/apis/user'
 
 import { GetFileAPI } from '@/apis/files'
@@ -21,7 +22,31 @@ export const useUserStore = defineStore(
     const userLoginByPwd = async ({ account, password }) => {
       const res = await LoginByPwdAPI({ account, password })
       userInfo.value = Object.assign({}, res)
+      await userGetInfo()
       console.log(userInfo)
+    }
+
+    const userRegister = async ({
+      username,
+      email,
+      password,
+      re_password,
+      code,
+      codeID,
+    }) => {
+      const res = await RegisterAPI({
+        username,
+        email,
+        password,
+        re_password,
+        code,
+        codeID,
+      })
+      console.log('ceshi')
+      if (res) {
+        console.log('ceshi1')
+        await userLoginByPwd({ account: res.username, password: res.password })
+      }
     }
 
     const getUserInfoByCode = async ({ account, code }) => {
@@ -100,6 +125,7 @@ export const useUserStore = defineStore(
       getEmailCode,
       UserVerifyCode,
       getUserAvatar,
+      userRegister,
     }
   },
   {

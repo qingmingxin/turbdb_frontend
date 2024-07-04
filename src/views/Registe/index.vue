@@ -2,35 +2,57 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
+import router from '@/router'
 const userStore = useUserStore()
 
 const registeFormRef = ref(null)
-const getVerifyCodeBtnDisabled = ref(false)
 const getVerifyCodeBtnText = ref('获取验证码')
+const isEmailValid = ref(false) // 默认邮箱格式不正确
+const getVerifyCodeBtnDisabled = ref(true) // 默认禁用获取验证码按钮
 const countdown = ref(0)
-const resCode = ref('111111')
 const registeFormData = ref({
   username: '',
   email: '',
   password: '',
-  rePassword: '',
-  workAddress: '',
+  re_password: '',
   code: '',
+  codeID: 0,
 })
 const rules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 20, message: '用户名长度为：3~20', trigger: 'blur' },
+    {
+      min: 3,
+      max: 20,
+      message: '用户名长度为：3~20',
+      trigger: 'blur',
+    },
   ],
   email: [
     { required: true, message: '请输入邮箱', trigger: 'blur' },
-    { type: 'email', message: '邮箱格式有误', trigger: 'blur' },
+    {
+      type: 'email',
+      message: '邮箱格式有误',
+      trigger: 'blur',
+      validator: (rule, val, callback) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        if (!emailRegex.test(val)) {
+          isEmailValid.value = false
+          getVerifyCodeBtnDisabled.value = true
+          return Promise.reject('邮箱格式有误')
+        } else {
+          isEmailValid.value = true
+          getVerifyCodeBtnDisabled.value = false
+          return Promise.resolve()
+        }
+      },
+    },
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     { min: 6, max: 20, message: '密码长度6~20', trigger: 'blur' },
   ],
-  rePassword: [
+  re_password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     { min: 6, max: 20, message: '密码长度6~20', trigger: 'blur' },
     {
@@ -44,19 +66,7 @@ const rules = {
       },
     },
   ],
-  code: [
-    { required: true, message: '请输入验证码', trigger: 'blur' },
-    {
-      trigger: 'blur',
-      validator: (rule, val, callback) => {
-        if (val === resCode.value) {
-          return callback()
-        } else {
-          return callback(new Error('验证码错误'))
-        }
-      },
-    },
-  ],
+  code: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
 }
 
 onMounted(() => {
@@ -68,6 +78,12 @@ onMounted(() => {
   }
 })
 
+onUnmounted(() => {
+  console.log('onUnmounted')
+  // 在页面卸载时保存当前倒计时时间到 sessionStorage
+  sessionStorage.setItem('countdown', String(countdown.value))
+})
+
 const startCountdown = () => {
   getVerifyCodeBtnDisabled.value = true
   const timer = setInterval(() => {
@@ -76,45 +92,50 @@ const startCountdown = () => {
     if (countdown.value <= 0) {
       clearInterval(timer)
       getVerifyCodeBtnDisabled.value = false
-      countdown.value = 60 // 重置倒计时
       getVerifyCodeBtnText.value = '获取验证码'
     }
   }, 1000)
 }
 
-onUnmounted(() => {
-  // 在页面卸载时保存当前倒计时时间到 sessionStorage
-  sessionStorage.setItem('countdown', String(countdown.value))
-})
-
 // 注册按钮事件
 const doRegiste = async () => {
-  console.log('click registe button')
   registeFormRef.value
     .validate()
-    .then(() => {
+    .then(async () => {
+      const { username, email, password, re_password, code, codeID } =
+        registeFormData.value
+      console.log(code)
+      await userStore.userRegister({
+        username,
+        email,
+        password,
+        re_password,
+        code,
+        codeID,
+      })
       console.log('registe')
+      ElMessage.success('注册成功')
+      countdown.value = 0
+      router.push('/')
     })
-    .catch(() => {
+    .catch((e) => {
+      console.log(e)
       ElMessage.error('请检查表单输入')
     })
 }
 
 //获取验证码按钮事件
-const getVerifyCode = () => {
-  console.log('click get verify code btn')
-
-  // 校验邮件
-  registeFormRef.value
-    .validateField('email')
-    .then(() => {
-      //发送获取验证码
-      // 倒计时，单位秒
-      // startCountdown();
-    })
-    .catch(() => {
-      console.log('failed')
-    })
+const getVerifyCode = async () => {
+  countdown.value = 60 // 重置倒计时
+  registeFormData.value.codeID = await userStore.getEmailCode({
+    email: registeFormData.value.email,
+  })
+  if (registeFormData.value.codeID === 0) {
+    ElMessage.error('验证码获取失败')
+  } else {
+    ElMessage.success('验证码获取成功')
+    startCountdown()
+  }
 }
 </script>
 
@@ -158,7 +179,7 @@ const getVerifyCode = () => {
               class="btn-get-verify"
               @click="getVerifyCode"
               type="primary"
-              :disabled="getVerifyCodeBtnDisabled"
+              :disabled="!isEmailValid || getVerifyCodeBtnDisabled"
               >{{ getVerifyCodeBtnText }}</el-button
             >
           </el-col>
@@ -171,22 +192,14 @@ const getVerifyCode = () => {
             show-password
           />
         </el-form-item>
-        <el-form-item label="确认密码" prop="rePassword" label-width="100px">
+        <el-form-item label="确认密码" prop="re_password" label-width="100px">
           <el-input
-            v-model="registeFormData.rePassword"
+            v-model="registeFormData.re_password"
             type="password"
             placeholder="请再次输入密码确认"
             show-password
           />
         </el-form-item>
-        <el-form-item label="工作单位" prop="workAddress" label-width="100px">
-          <el-input
-            v-model="registeFormData.workAddress"
-            placeholder="请输入工作单位"
-            clearable
-          ></el-input>
-        </el-form-item>
-
         <el-form-item>
           <el-button class="btn" @click="doRegiste">注册</el-button>
         </el-form-item>

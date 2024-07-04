@@ -1,17 +1,11 @@
 <script setup>
-import { ref, onBeforeMount, reactive } from 'vue'
+import { ref, onBeforeMount, reactive, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 const userStore = useUserStore()
 const userInfoTemp = reactive({})
 const changeItem = reactive({})
-
-const loadUserInfo = () => {
-  for (var key in userStore.userItemList) {
-    userInfoTemp[key] = userStore.userInfo[key]
-  }
-}
 
 const isModified = ref(false)
 const codeID_c = ref(0)
@@ -76,9 +70,15 @@ const verifyCode = async () => {
   }
 }
 
-onBeforeMount(async () => {
+onMounted(async () => {
+  // await userStore.userGetInfo()
   loadUserInfo()
 })
+const loadUserInfo = () => {
+  for (var key in userStore.userItemList) {
+    userInfoTemp[key] = userStore.userInfo[key]
+  }
+}
 </script>
 <template>
   <div>
