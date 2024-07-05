@@ -90,7 +90,7 @@ const doChangePwd = () => {
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .pwd_change_page {
   padding-top: 10px;
   margin: auto;

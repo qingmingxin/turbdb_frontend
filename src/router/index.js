@@ -95,7 +95,20 @@ const router = createRouter({
         },
         {
           path: 'database',
-          component: () => import('@/views/Database/index.vue'),
+          children: [
+            {
+              path: 'hyp',
+              component: () => import('@/views/Database/components/Hyp.vue'),
+            },
+            {
+              path: 'm',
+              component: () => import('@/views/Database/components/M.vue'),
+            },
+            {
+              path: 'hk',
+              component: () => import('@/views/Database/components/HK.vue'),
+            },
+          ],
         },
       ],
     },

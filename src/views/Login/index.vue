@@ -67,6 +67,9 @@ const doLogin = () => {
     }
   })
 }
+const getCodeLogin = () => {
+  console.log('点击按钮')
+}
 </script>
 
 <template>
@@ -110,27 +113,31 @@ const doLogin = () => {
               style="width: 200px"
               class="input-item"
             />
-            <el-button style="margin-left: 30px; height: 40px"
+            <el-button
+              style="margin-left: 30px; height: 40px"
+              @click="getCodeLogin"
               >获取验证码</el-button
             >
           </el-form-item>
         </template>
         <div class="a-group">
           <div>没有账号？<RouterLink to="/registe">点此注册</RouterLink></div>
-          <template v-if="isVerifyLogin">
+          <!-- TODO：实现邮箱验证登陆 -->
+          <!-- <template v-if="isVerifyLogin">
             <a @click="onChangeLoginWay">账号密码登录</a>
           </template>
           <template v-else>
             <a @click="onChangeLoginWay">邮箱验证登录</a>
-          </template>
+          </template> -->
         </div>
         <el-form-item>
           <div class="btn" @click="doLogin">登录</div>
         </el-form-item>
       </el-form>
-      <div class="msg">
+      <!-- TODO：忘记密码逻辑先注释 -->
+      <!-- <div class="msg">
         <a href="#">已有帐号，忘记密码?</a>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

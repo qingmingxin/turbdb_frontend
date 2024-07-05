@@ -49,7 +49,7 @@ const downloadFile = (row) => {
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .download_page {
   padding-top: 60px;
   width: 70%;

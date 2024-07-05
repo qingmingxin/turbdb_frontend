@@ -5,15 +5,15 @@ import HomeFooter from './components/HomeFooter.vue'
 </script>
 
 <template>
-    <div class="home">
-        <TitleView />
-        <DatabaseView />
-        <HomeFooter />
-    </div>
+  <div class="home">
+    <TitleView />
+    <DatabaseView />
+    <HomeFooter />
+  </div>
 </template>
 
-<style lang="scss">
-.home{
-    background-color: white;
+<style scoped lang="scss">
+.home {
+  background-color: white;
 }
 </style>

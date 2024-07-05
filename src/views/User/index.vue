@@ -27,7 +27,7 @@ function beforeAvatarUpload(file) {
 }
 let uploadUrl = ref('/api/users/avatar/upload/' + userStore.userInfo.id + '/')
 onBeforeMount(async () => {
-  await userStore.userGetInfo() 
+  await userStore.userGetInfo()
   var ret = await userStore.getUserAvatar()
   imageUrl.value = ret
 })
@@ -67,7 +67,7 @@ const token = ref({ Authorization: `Bearer ${userStore.userInfo.token}` })
   </el-container>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .personal-page {
   padding-top: 10px;
   margin: auto;
@@ -113,7 +113,7 @@ const token = ref({ Authorization: `Bearer ${userStore.userInfo.token}` })
 }
 </style>
 
-<style lang="scss">
+<style scoped lang="scss">
 .institute {
   padding-top: 10px;
   margin: auto;

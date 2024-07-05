@@ -6,16 +6,19 @@ const databaseItems = ref([
     imgSrc: 'http://www.news.cn/mil/2023-04/28/1212172337_16826437022281n.jpg',
     title: '民机翼型/机翼湍流信息数据库',
     description: '包含超/高超声速平板、钝锥、压缩拐角的DNS与实验数据',
+    router_url: '/database/m',
   },
   {
     imgSrc: 'http://www.news.cn/mil/2023-04/28/1212172337_16826437022281n.jpg',
     title: '高超声速飞行器标模湍流数据',
     description: '包含超/高超声速平板、钝锥、压缩拐角的DNS与实验数据',
+    router_url: '/database/hyp',
   },
   {
     imgSrc: 'http://www.news.cn/mil/2023-04/28/1212172337_16826437022281n.jpg',
     title: '航空发动机典型部件湍流数据',
     description: '包含超/高超声速平板、钝锥、压缩拐角的DNS与实验数据',
+    router_url: '/database/hk',
   },
 ])
 </script>
@@ -31,7 +34,7 @@ const databaseItems = ref([
             <span>{{ item.description }}</span>
           </div>
           <el-divider />
-          <RouterLink to="/database"
+          <RouterLink :to="item.router_url"
             ><el-button text class="button">查看详情</el-button></RouterLink
           >
         </el-card>

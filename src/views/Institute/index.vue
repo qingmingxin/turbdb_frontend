@@ -2,7 +2,7 @@
 
 <template>
   <el-container class="institute">
-    <el-aside width="600px">
+    <el-aside width="35%">
       <el-row class="tac">
         <el-col :span="12">
           <h2 style="text-align: left; padding-left: 20px">研究机构</h2>
@@ -36,7 +36,7 @@
   </el-container>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .institute {
   display: flex;
   height: calc(100vh - 80px);

@@ -148,7 +148,7 @@ const loadUserInfo = () => {
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .user-info-page {
   padding-top: 30px;
   margin: auto;

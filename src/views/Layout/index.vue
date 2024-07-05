@@ -1,6 +1,5 @@
 <script setup>
 import LayoutNav from '@/views/Layout/components/LayoutNav.vue'
-
 </script>
 
 <template>
@@ -12,10 +11,10 @@ import LayoutNav from '@/views/Layout/components/LayoutNav.vue'
   </div>
 </template>
 
-<style lang="scss">
-.layout-container{
+<style scoped lang="scss">
+.layout-container {
   height: 100vh;
-  .el-scrollbar{
+  .el-scrollbar {
     max-height: calc(100vh - 70px);
   }
 }

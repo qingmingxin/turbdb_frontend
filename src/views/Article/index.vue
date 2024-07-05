@@ -43,7 +43,7 @@ const articleList = ref([
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .card-container {
   display: flex;
   flex-direction: column;
