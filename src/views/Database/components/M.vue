@@ -47,7 +47,7 @@ onMounted(() => {
   <div class="common-layout">
     <el-container>
       <el-header style="font-weight: bolder; font-size: 30px"
-        >民机翼型/机翼湍流信息数据库</el-header
+        >民机翼型/机翼湍流数据库</el-header
       >
       <el-container>
         <el-aside width="200px">

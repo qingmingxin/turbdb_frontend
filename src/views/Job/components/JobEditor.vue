@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import CodeEditor from './CodeEditor.vue'
 
 const databasesList = ref(['数据库1', '数据库2'])

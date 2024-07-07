@@ -6,6 +6,7 @@ const activeName = ref('editor')
 const handleClick = (tab, event) => {
   console.log(tab, event)
 }
+
 </script>
 
 <template>

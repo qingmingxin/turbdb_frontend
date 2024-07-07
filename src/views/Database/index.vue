@@ -12,7 +12,7 @@
         >
           <el-sub-menu index="1">
             <template #title>
-              <span>民机翼型/机翼湍流信息数据库</span>
+              <span>民机翼型/机翼湍流数据库</span>
             </template>
             <el-menu-item-group title="Group One">
               <el-menu-item index="1-1">item one</el-menu-item>

@@ -4,7 +4,7 @@ import { ref } from 'vue'
 const databaseItems = ref([
   {
     imgSrc: 'http://www.news.cn/mil/2023-04/28/1212172337_16826437022281n.jpg',
-    title: '民机翼型/机翼湍流信息数据库',
+    title: '民机翼型/机翼湍流数据库',
     description: '包含超/高超声速平板、钝锥、压缩拐角的DNS与实验数据',
     router_url: '/database/m',
   },
