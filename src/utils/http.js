@@ -69,6 +69,12 @@ httpInstance.interceptors.response.use(
           duration: 5000,
         })
       }
+    } else if (e.code === 'ERR_BAD_RESPONSE') {
+      ElMessage({
+        type: 'error',
+        message: '服务器错误',
+        duration: 5000,
+      })
     } else {
       console.log(e)
       var url = e.config.url

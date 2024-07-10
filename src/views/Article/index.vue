@@ -8,22 +8,12 @@ onBeforeMount(async () => {
   console.log(ret)
 })
 
-const articleList = ref([
-  {
-    title: 'Article 1',
-    author: 'Author 1',
-    journal: 'Journal 1',
-  },
-  {
-    title: 'Article 2',
-    author: 'Author 2',
-    journal: 'Journal 2',
-  },
-])
+const articleList = ref([])
 </script>
 
 <template>
-  <div class="card-container">
+  <el-empty v-if="articleList" description="服务器连接失败" />
+  <div v-else class="card-container">
     <el-row :gutter="20" justify="center">
       <el-col
         :span="16"

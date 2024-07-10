@@ -25,18 +25,18 @@ function navigateTo() {
         <li>
           <RouterLink to="/institute/nwpu">研究机构</RouterLink>
         </li>
-        <li>
+        <!-- <li>
           <RouterLink to="/query">获取数据</RouterLink>
-        </li>
+        </li> -->
 
         <!-- <template v-if="userStore.userInfo.token"> -->
         <template v-if="true">
           <li>
             <RouterLink to="/download">数据下载</RouterLink>
           </li>
-          <li>
+          <!-- <li>
             <RouterLink to="/job">在线提交</RouterLink>
-          </li>
+          </li> -->
         </template>
 
         <li>

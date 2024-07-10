@@ -2,12 +2,14 @@
 import { ref } from 'vue'
 
 const filePath = ref('')
-const tableData = ref([
+const tableData1 = ref([
   { name: 'File 1', size: '1.5 MB', filenameTrue: true },
   { name: 'File 2', size: '2.3 GB', filenameTrue: false },
   { name: 'File 3', size: '550 KB', filenameTrue: true },
   { name: 'File 4', size: '3.1 GB', filenameTrue: false },
 ])
+
+const tableData = ref([])
 
 const handlerClick = (row) => {
   console.log('Clicked:', row.name)
@@ -23,7 +25,8 @@ const downloadFile = (row) => {
 <template>
   <div class="download_page">
     <div class="download_page_title">Index of / {{ filePath }}</div>
-    <el-table :data="tableData" style="width: 100%">
+    <el-empty v-if="tableData" description="服务器连接失败" />
+    <el-table v-else :data="tableData" style="width: 100%">
       <el-table-column prop="name" label="File Name" />
       <el-table-column prop="size" label="Size" width="200" />
     </el-table>
