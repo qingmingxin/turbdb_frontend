@@ -10,10 +10,15 @@ const tableData1 = ref([
 ])
 
 const tableData = ref([])
+const datasetList = ref(['1', '2', '3'])
 
 const handlerClick = (row) => {
   console.log('Clicked:', row.name)
   // Add your logic for handling click events for non-downloadable files
+}
+
+const handlerClickDataset = (dataset) => {
+  console.log('Clicked:', dataset)
 }
 
 const downloadFile = (row) => {
@@ -23,33 +28,31 @@ const downloadFile = (row) => {
 </script>
 
 <template>
-  <div class="download_page">
-    <div class="download_page_title">Index of / {{ filePath }}</div>
-    <el-empty v-if="tableData" description="服务器连接失败" />
-    <el-table v-else :data="tableData" style="width: 100%">
-      <el-table-column prop="name" label="File Name" />
-      <el-table-column prop="size" label="Size" width="200" />
-    </el-table>
-    <!-- <el-table
-      :data="tableData"
-      style="width: 80%; font-size: 20px; margin-bottom: 25px"
-      border
-    >
-      <el-table-column prop="name" label="Name" width="80%">
-        <template v-slot="{ row }">
-          <a v-if="!row.filenameTrue" href="#" @click="handlerClick(row)">{{
-            row.name
-          }}</a>
-          <a v-else href="#" @click="downloadFile(row)">{{ row.name }}</a>
-        </template>
-      </el-table-column>
-      <el-table-column prop="size" label="Size" width="20%">
-        <template v-slot="{ row }">
-          {{ row.size }}
-        </template>
-      </el-table-column>
-    </el-table> -->
-  </div>
+  <el-container class="download_page">
+    <el-aside width="20%">
+      <h2 style="text-align: left; padding-left: 20px">研究机构</h2>
+      <el-menu
+        default-active="/institute/nwpu"
+        class="el-menu-vertical-demo"
+        router
+      >
+        <el-menu-item
+          v-for="(item, index) in datasetList"
+          @click="handlerClickDataset(item)"
+        >
+          {{ item }}
+        </el-menu-item>
+      </el-menu>
+    </el-aside>
+    <el-main>
+      <div class="download_page_title">Index of / {{ filePath }}</div>
+      <el-empty v-if="tableData" description="服务器连接失败" />
+      <el-table v-else :data="tableData" style="width: 100%">
+        <el-table-column prop="name" label="File Name" />
+        <el-table-column prop="size" label="Size" width="200" />
+      </el-table>
+    </el-main>
+  </el-container>
 </template>
 
 <style scoped lang="scss">
