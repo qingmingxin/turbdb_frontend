@@ -11,16 +11,30 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    hmr: true,     //启动热更新，就是更改了代码自动刷新页面
-    port: 8082,    //自定义启动时的端口
-    open: true,   //代表vite项目在启动时自动打开浏览器 
+    hmr: true, //启动热更新，就是更改了代码自动刷新页面
+    port: 8082, //自定义启动时的端口
+    open: true, //代表vite项目在启动时自动打开浏览器
     proxy: {
-      "/api": {
-        target: "http://192.168.56.120:8000/",
+      '/api': {
+        target: 'http://192.168.56.120:8000/',
         //你的需要请求的服务器地址
         changeOrigin: true, // 允许跨域
-        secure: false,  //忽略安全证书   
+        secure: false, //忽略安全证书
         rewrite: (path) => path.replace(/^\/api/, '/api'), // 重写路径把路径变成空字符,
+      },
+      '/metanode': {
+        target: 'http://192.168.56.120:8001/',
+        //你的需要请求的服务器地址
+        changeOrigin: true, // 允许跨域
+        secure: false, //忽略安全证书
+        rewrite: (path) => path.replace(/^\/metanode/, '/api/v1'), // 重写路径把路径变成空字符,
+      },
+      '/datanode': {
+        target: 'http://192.168.56.120:8002/',
+        //你的需要请求的服务器地址
+        changeOrigin: true, // 允许跨域
+        secure: false, //忽略安全证书
+        rewrite: (path) => path.replace(/^\/datanode/, '/api/v1'), // 重写路径把路径变成空字符,
       },
     },
   },
@@ -30,15 +44,13 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     Components({
-      resolvers: [
-        ElementPlusResolver({ importStyle: "sass" }),
-      ],
+      resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
     }),
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   css: {
     preprocessorOptions: {
@@ -48,7 +60,7 @@ export default defineConfig({
           @use "@/styles/element/index.scss" as *;
           @use "@/styles/var.scss" as *;
         `,
-      }
-    }
-  }
+      },
+    },
+  },
 })

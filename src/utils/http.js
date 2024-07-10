@@ -6,7 +6,16 @@ import { useRouter } from 'vue-router'
 
 const httpInstance = axios.create({
   baseURL: '/api',
-  // baseURL: "http://pcapi-xiaotuxian-front-devtest.itheima.net",
+  timeout: 5000,
+})
+
+export const metanodeInstance = axios.create({
+  baseURL: '/metanode',
+  timeout: 5000,
+})
+
+export const datanodeInstance = axios.create({
+  baseURL: '/datanode',
   timeout: 5000,
 })
 
