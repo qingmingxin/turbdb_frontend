@@ -15,15 +15,15 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              src="@/views/Database/images/Institute/zww.png"
               class="image"
+              style="width: 160px;"
             />
-            <h2>张伟伟教授实验室</h2>
+            <h2><a href="https://teacher.nwpu.edu.cn/2006000145.html" class="card-text" target="_blank" >张伟伟教授实验室</a></h2>
           </el-col>
           <el-col
             :span="18"
-            style="padding: 30px 20px 0 20px; font-size: 15px; text-align: left"
-          >
+            style="padding: 30px 20px 0 20px; font-size: 15px; text-align: left">
             <p>
               张伟伟教授团队近年围绕数据驱动的流体力学开展了系统研究，包括湍流机
               器学习、非定常气动力建模与流固耦合、气动优化设计以及流动自适应智能化控
@@ -46,10 +46,11 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              src="@/views/Database/images/Institute/glm.jpg"
               class="image"
+              style="width: 160px;"
             />
-            <h2>高丽敏教授实验室</h2>
+            <h2><a href="https://teacher.nwpu.edu.cn/gaolimin.html" class="card-text" target="_blank" >高丽敏教授实验室</a></h2>
           </el-col>
           <el-col
             :span="18"
@@ -77,10 +78,11 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              src="@/views/Database/images/Institute/zx.jpg"
               class="image"
+              style="width: 160px;"
             />
-            <h2>张晓教授实验室</h2>
+            <h2><a href="https://teacher.nwpu.edu.cn/zhangxiao.html" class="card-text" target="_blank">张晓教授实验室</a></h2>
           </el-col>
           <el-col
             :span="18"

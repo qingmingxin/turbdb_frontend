@@ -9,10 +9,11 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              src="@/views/Database/images/Institute/lh.jpg"
               class="image"
+              style="width: 160px;"
             />
-            <h2>李惠教授实验室</h2>
+            <h2><a href="http://homepage.hit.edu.cn/lihui" class="card-text" target="_blank" >李惠教授实验室</a></h2>
           </el-col>
           <el-col
             :span="18"

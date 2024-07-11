@@ -15,10 +15,11 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              src="@/views/Database/images/Institute/lyz.jpg"
               class="image"
+              style="width: 160px;"
             />
-            <h2>刘应征教授实验室</h2>
+            <h2><a href="https://me.sjtu.edu.cn/teacher_directory1/2249.html" class="card-text" target="_blank" >刘应征教授实验室</a></h2>
           </el-col>
           <el-col
             :span="18"
@@ -37,10 +38,11 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              src="@/views/Database/images/Institute/xh.jpg"
               class="image"
+              style="width: 160px;"
             />
-            <h2>徐辉副教授实验室</h2>
+           <h2> <a href="https://www.aero.sjtu.edu.cn/Data/View/2949" class="card-text" target="_blank" >徐辉副教授实验室</a></h2>
           </el-col>
           <el-col
             :span="18"

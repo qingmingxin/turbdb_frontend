@@ -12,10 +12,11 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              src="@/views/Database/images/Institute/xzh.png"
               class="image"
+              style="width: 160px;"
             />
-            <h2>夏振华实验室</h2>
+            <h2><a href="https://person.zju.edu.cn/xzh" class="card-text" target="_blank" >夏振华实验室</a></h2>
           </el-col>
           <el-col
             :span="18"
