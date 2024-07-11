@@ -59,7 +59,6 @@ const sortAndSetData = (data) => {
   cur_tableData.value = data.slice().sort((a, b) => {
     if (a.children && !b.children) return -1
     if (!a.children && b.children) return 1
-    return 0
   })
 }
 
@@ -82,6 +81,7 @@ const updateCurTableData = () => {
     }
   }
   cur_tableData.value = current
+  sortAndSetData(cur_tableData.value)
 }
 
 const goBack = () => {
@@ -102,6 +102,7 @@ const goBack = () => {
         router
       >
         <el-menu-item
+          class="el-menu-vertical-demo"
           v-for="(item, index) in datasetList"
           @click="handlerClickDataset(item)"
         >
@@ -116,7 +117,7 @@ const goBack = () => {
           path
         }}</el-breadcrumb-item>
         <el-breadcrumb-item v-if="filePath.length > 0">
-          <a @click="goBack">返回上一级</a>
+          <a @click="goBack" class="goBack_a">返回上一级</a>
         </el-breadcrumb-item>
       </el-breadcrumb>
       <el-divider />
@@ -145,12 +146,19 @@ const goBack = () => {
     font-size: 20px;
     font-weight: 750;
   }
+  .el-menu-vertical-demo {
+    border-right: none !important;
+    font-size: $AsideMenuItemSize;
+  }
   .el-table {
     width: 100%;
     margin-top: 30px;
   }
   .breadcrumb {
-    font-size: 25px;
+    font-size: $DownloadTitleFontSize;
+  }
+  .goBack_a:hover {
+    color: aqua;
   }
 }
 </style>
