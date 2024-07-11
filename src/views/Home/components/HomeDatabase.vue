@@ -3,19 +3,19 @@ import { ref } from 'vue'
 
 const databaseItems = ref([
   {
-    imgSrc: 'src/views/Database/images/Home/m.png',
+    imgSrc: 'src/views/Home/images/m.png',
     title: '民机翼型/机翼湍流数据库',
     description: '包含超/高超声速平板、钝锥、压缩拐角的DNS与实验数据',
     router_url: '/database/m',
   },
   {
-    imgSrc: 'src/views/Database/images/Home/hyp.png',
+    imgSrc: 'src/views/Home/images/hyp.png',
     title: '高超声速飞行器标模湍流数据',
     description: '包含超/高超声速平板、钝锥、压缩拐角的DNS与实验数据',
     router_url: '/database/hyp',
   },
   {
-    imgSrc: 'src/views/Database/images/Home/hk.png',
+    imgSrc: 'src/views/Home/images/hk.png',
     title: '航空发动机典型部件湍流数据',
     description: '包含超/高超声速平板、钝锥、压缩拐角的DNS与实验数据',
     router_url: '/database/hk',

@@ -12,7 +12,7 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="@/views/Database/images/Institute/lh.jpg"
+              src="@/views/Institute/images/lh.jpg"
               class="image"
               style="width: 160px;"
             />

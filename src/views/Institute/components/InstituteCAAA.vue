@@ -9,11 +9,18 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="@/views/Database/images/Institute/lh.jpg"
+              src="@/views/Institute/images/lh.jpg"
               class="image"
-              style="width: 160px;"
+              style="width: 160px"
             />
-            <h2><a href="http://homepage.hit.edu.cn/lihui" class="card-text" target="_blank" >李惠教授实验室</a></h2>
+            <h2>
+              <a
+                href="http://caaa-spacechina.com/index.html"
+                class="card-text"
+                target="_blank"
+                >中国航天空气动力技术研究所</a
+              >
+            </h2>
           </el-col>
           <el-col
             :span="18"

@@ -15,7 +15,7 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="@/views/Database/images/Institute/zww.png"
+              src="@/views/Institute/images/zww.png"
               class="image"
               style="width: 160px;"
             />
@@ -46,7 +46,7 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="@/views/Database/images/Institute/glm.jpg"
+              src="@/views/Institute/images/glm.jpg"
               class="image"
               style="width: 160px;"
             />
@@ -78,7 +78,7 @@
         <el-row>
           <el-col :span="6">
             <img
-              src="@/views/Database/images/Institute/zx.jpg"
+              src="@/views/Institute/images/zx.jpg"
               class="image"
               style="width: 160px;"
             />
