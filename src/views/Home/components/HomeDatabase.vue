@@ -25,11 +25,11 @@ const databaseItems = ref([
 
 <template>
   <div class="databases-container">
-    <el-row :gutter="20" justify="center">
+    <el-row :gutter="20" justify="center" class="row">
       <el-col :span="7" v-for="(item, index) in databaseItems" :key="index">
         <el-card shadow="hover" :body-style="{ padding: '20px 0 0 0' }">
           <img :src="item.imgSrc" class="image" />
-          <h2>{{ item.title }}</h2>
+          <div class="database_title">{{ item.title }}</div>
           <div class="detail">
             <span>{{ item.description }}</span>
           </div>
@@ -45,16 +45,26 @@ const databaseItems = ref([
 
 <style lang="scss" scoped>
 .databases-container {
-  padding: 100px 0;
   text-align: center;
   margin: auto;
-  width: 60%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+
+  .row {
+    flex: 0.9;
+    align-items: center;
+  }
 
   .el-card {
     transition: transform 0.3s ease-in-out;
 
     &:hover {
       transform: translateY(-5px);
+    }
+    .database_title {
+      font-size: $HomeDatabaseTitleFontSize;
+      font-weight: bold;
     }
 
     .detail {
@@ -76,6 +86,7 @@ const databaseItems = ref([
       margin: 0;
       color: $xtxColor;
       text-align: center;
+      font-size: $HomeDatabaseButtonFontSize;
 
       &:hover {
         background-color: $xtxColor;

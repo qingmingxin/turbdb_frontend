@@ -6,21 +6,24 @@ export const useDatasetStore = defineStore(
   'dataset',
   () => {
     const datasetList = ref([])
-    const datasetStruct = ref([])
+    const node = ref('')
 
     const getDatasetList = async () => {
       const res = await GetDatasetAPI()
-      datasetList.value = res
+      datasetList.value = res.data
+      return res.data
     }
 
-    const getDatasetStruct = async () => {
-      const res = await GetDatasetStructAPI()
-      datasetStruct = res
+    const getDatasetStruct = async (dataset_va) => {
+      const res = await GetDatasetStructAPI({ dataset: dataset_va })
+      console.log(res.data)
+      node.value = res.data['node']
+      return res.data['json_data']['data']
+      // datasetStruct = res.data
     }
 
     return {
       datasetList,
-      datasetStruct,
       getDatasetList,
       getDatasetStruct,
     }

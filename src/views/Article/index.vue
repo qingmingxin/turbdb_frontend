@@ -1,18 +1,16 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, onMounted } from 'vue'
 import { GetArticleListAPI } from '@/apis/common'
+const articleList = ref([])
 
-onBeforeMount(async () => {
+onMounted(async () => {
   var ret = await GetArticleListAPI()
   articleList.value = ret
-  console.log(ret)
 })
-
-const articleList = ref([])
 </script>
 
 <template>
-  <el-empty v-if="articleList" description="服务器连接失败" />
+  <el-empty v-if="articleList.length === 0" description="正在努力获取中..." />
   <div v-else class="card-container">
     <el-row :gutter="20" justify="center">
       <el-col
@@ -38,7 +36,8 @@ const articleList = ref([])
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px;
+  padding-top: 40px;
+  padding-bottom: 20px;
 }
 
 .el-row {

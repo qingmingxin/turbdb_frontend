@@ -23,7 +23,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '/api'), // 重写路径把路径变成空字符,
       },
       '/metanode': {
-        target: 'http://192.168.56.120:8001/',
+        target: 'http://127.0.0.1:8087/',
         //你的需要请求的服务器地址
         changeOrigin: true, // 允许跨域
         secure: false, //忽略安全证书

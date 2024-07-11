@@ -4,9 +4,9 @@ import { useRouter } from 'vue-router'
 const userStore = useUserStore()
 const router = useRouter()
 
-const doLogout = () => {
+const doLogout = async () => {
   console.log('退出')
-  userStore.UserLogout()
+  await userStore.UserLogout()
   ElMessage({ type: 'success', message: '退出成功' })
   router.push('/')
 }
@@ -73,8 +73,7 @@ function navigateTo() {
           <li>
             <RouterLink to="/registe">注册账号</RouterLink>
           </li>
-          <li><a href="javascript:;">帮助中心</a></li>
-          <li><a href="javascript:;">关于我们</a></li>
+          <!-- <li><a href="javascript:;">帮助中心</a></li> -->
         </template>
       </ul>
     </div>
@@ -89,6 +88,8 @@ function navigateTo() {
   /* 可根据需要调整左右边距 */
 
   width: 100%;
+
+  font-size: $navFontSize;
 
   .app-topnav-content {
     display: flex;

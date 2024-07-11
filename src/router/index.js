@@ -37,6 +37,10 @@ const router = createRouter({
           component: () => import('@/views/Registe/index.vue'),
         },
         {
+          path: '/about',
+          component: () => import('@/views/About/index.vue'),
+        },
+        {
           path: 'job',
           component: () => import('@/views/Job/index.vue'),
           // children:[

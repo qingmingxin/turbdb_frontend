@@ -61,7 +61,7 @@ const verifyCode = async () => {
   var data = {
     email: userInfoTemp['email'],
     code: verificationCode.value,
-    codeID: codeID_c.value,
+    codeID: String(codeID_c.value),
   }
   var ret = await userStore.UserVerifyCode(data)
   if (ret) {

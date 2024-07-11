@@ -4,26 +4,26 @@
   <el-container class="institute">
     <el-aside width="35%">
       <el-row class="tac">
-        <el-col :span="12">
+        <el-col>
           <h2 style="text-align: left; padding-left: 20px">研究机构</h2>
           <el-menu
             default-active="/institute/nwpu"
             class="el-menu-vertical-demo"
             router
           >
-            <el-menu-item index="/institute/nwpu">
+            <el-menu-item class="el-menu-vertical-demo" index="/institute/nwpu">
               <span>西北工业大学</span>
             </el-menu-item>
-            <el-menu-item index="/institute/sjtu">
+            <el-menu-item class="el-menu-vertical-demo" index="/institute/sjtu">
               <span>上海交通大学</span>
             </el-menu-item>
-            <el-menu-item index="/institute/zju">
+            <el-menu-item class="el-menu-vertical-demo" index="/institute/zju">
               <span>浙江大学</span>
             </el-menu-item>
-            <el-menu-item index="/institute/hit">
+            <el-menu-item class="el-menu-vertical-demo" index="/institute/hit">
               <span>哈尔滨工业大学</span>
             </el-menu-item>
-            <el-menu-item index="/institute/caaa">
+            <el-menu-item class="el-menu-vertical-demo" index="/institute/caaa">
               <span>中国航天空气动力技术研究院</span>
             </el-menu-item>
           </el-menu>
@@ -39,12 +39,17 @@
 <style scoped lang="scss">
 .institute {
   display: flex;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 100px);
   margin: auto;
   width: 70%;
 
   .institute-aside {
-    overflow-y: auto;
+    border-right: none !important;
+  }
+
+  .el-menu-vertical-demo {
+    border-right: none !important;
+    font-size: $AsideMenuItemSize;
   }
 
   .institute-main {
@@ -55,6 +60,7 @@
     .scrollbar-content {
       height: 100%;
       overflow-y: auto;
+      padding-bottom: 50px;
     }
   }
 }

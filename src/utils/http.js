@@ -22,10 +22,13 @@ export const datanodeInstance = axios.create({
 // axios请求拦截器
 httpInstance.interceptors.request.use(
   (config) => {
-    const userStore = useUserStore()
-    const token = userStore.userInfo.token
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+    if (config.headers.requiresToken) {
+      const userStore = useUserStore()
+      const token = userStore.userInfo.token
+
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+      }
     }
     return config
   },
@@ -65,7 +68,7 @@ httpInstance.interceptors.response.use(
     } else if (e.config.url.indexOf('file') != -1) {
       console.log(e)
     } else if (e.config.url.indexOf('verify') != -1) {
-      if (e.response.data.error === '"邮箱不能重复绑定多个用户"') {
+      if (e.response.data.error === '邮箱不能重复绑定多个用户') {
         ElMessage({
           type: 'error',
           message: '该邮箱已被使用',

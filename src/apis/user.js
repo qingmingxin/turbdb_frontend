@@ -14,6 +14,9 @@ export function LoginByPwdAPI({ account, password }) {
       username: account,
       password,
     },
+    headers: {
+      requiresToken: true, // 根据参数决定是否需要 token
+    },
   })
 }
 
@@ -36,6 +39,9 @@ export function RegisterAPI({
       code,
       codeID,
     },
+    headers: {
+      requiresToken: true, // 根据参数决定是否需要 token
+    },
   })
 }
 
@@ -46,6 +52,9 @@ export function LoginByCodeAPI({ account, code }) {
     data: {
       account,
       code,
+    },
+    headers: {
+      requiresToken: true, // 根据参数决定是否需要 token
     },
   })
 }
@@ -59,6 +68,9 @@ export function PwdChangeAPI({ pwd_old, pwd_new, pwd_re, user_id }) {
       pwd_new,
       pwd_re,
     },
+    headers: {
+      requiresToken: true, // 根据参数决定是否需要 token
+    },
   })
 }
 
@@ -66,6 +78,9 @@ export function GetUserInfoAPI({ user_id }) {
   return httpInstance({
     url: modelProfix + '/info/' + user_id,
     method: 'get',
+    headers: {
+      requiresToken: true, // 根据参数决定是否需要 token
+    },
   })
 }
 
@@ -78,6 +93,9 @@ export function VerifyCodeAPI({ email, code, codeID }) {
       code,
       codeID,
     },
+    headers: {
+      requiresToken: true, // 根据参数决定是否需要 token
+    },
   })
 }
 
@@ -87,6 +105,9 @@ export function SendEmail({ email }) {
     method: 'post',
     data: {
       email,
+    },
+    headers: {
+      requiresToken: true, // 根据参数决定是否需要 token
     },
   })
 }
@@ -98,6 +119,9 @@ export function UpdateUserInfoAPI({ data, user_id }) {
     data: {
       data,
     },
+    headers: {
+      requiresToken: true, // 根据参数决定是否需要 token
+    },
   })
 }
 
@@ -107,6 +131,9 @@ export function LogoutAPI(account) {
     method: 'post',
     data: {
       account: account,
+    },
+    headers: {
+      requiresToken: true, // 根据参数决定是否需要 token
     },
   })
 }
