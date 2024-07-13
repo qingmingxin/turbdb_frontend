@@ -12,25 +12,25 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig({
   server: {
     hmr: true, //启动热更新，就是更改了代码自动刷新页面
-    port: 8082, //自定义启动时的端口
+    port: 8000, //自定义启动时的端口
     open: true, //代表vite项目在启动时自动打开浏览器
     proxy: {
       '/api': {
-        target: 'http://192.168.56.120:8000/',
+        target: 'http://127.0.0.1:8001/',
         //你的需要请求的服务器地址
         changeOrigin: true, // 允许跨域
         secure: false, //忽略安全证书
         rewrite: (path) => path.replace(/^\/api/, '/api'), // 重写路径把路径变成空字符,
       },
       '/metanode': {
-        target: 'http://127.0.0.1:8087/',
+        target: 'http://127.0.0.1:8002/',
         //你的需要请求的服务器地址
         changeOrigin: true, // 允许跨域
         secure: false, //忽略安全证书
         rewrite: (path) => path.replace(/^\/metanode/, '/api/v1'), // 重写路径把路径变成空字符,
       },
       '/datanode': {
-        target: 'http://192.168.56.120:8002/',
+        target: 'http://127.0.0.1:8003/',
         //你的需要请求的服务器地址
         changeOrigin: true, // 允许跨域
         secure: false, //忽略安全证书
